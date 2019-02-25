@@ -11,13 +11,14 @@
     "url": "git+https://github.com/SamLife91/quanterall-payment-system-wrapper.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Samir Barguti",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SamLife91/quanterall-payment-system-wrapper/issues"
   },
   "homepage": "https://github.com/SamLife91/quanterall-payment-system-wrapper#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "node-fetch": "^2.3.0"
   }
 }
