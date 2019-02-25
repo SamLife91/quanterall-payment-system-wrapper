@@ -1,6 +1,12 @@
 const express = require('express');
 const app = express();
 const fetch = require('node-fetch');
+// import {login} from 'qps/qps.js'
+
+let qpsPath = `${process.cwd()}/qps/qps`
+const qps = require(qpsPath)
+console.log(qps)
+
 
 app.use(express.json());
 
@@ -8,11 +14,23 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.get('/api/courses', async (req, res) => {
-  const result = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-  .then(response => response.json())
-  console.log(result);
-  res.send(result);
+app.post('/login', (req, res) => {
+  const data = {
+      operation: "auth",
+      type : "login",
+      data : {
+        user: "test_user",
+        password : "test_password"
+      }
+    } 
+  // const result = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+  // .then(response => response.json())
+  // console.log(result);
+  const alt = qps.login(data)
+  console.log(alt)
+  // let alternative = qps.login('param')
+  // console.log(alternative)
+  res.send(alt);
 });
 
 app.get('/api/courses/:id', (req, res) => {
