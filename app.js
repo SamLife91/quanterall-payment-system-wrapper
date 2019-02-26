@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const fetch = require('node-fetch');
 // import {login} from 'qps/qps.js'
 
 let qpsPath = `${process.cwd()}/qps/qps`
@@ -23,13 +22,8 @@ app.post('/login', (req, res) => {
         password : "test_password"
       }
     } 
-  // const result = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-  // .then(response => response.json())
-  // console.log(result);
   const alt = qps.login(data)
   console.log(alt)
-  // let alternative = qps.login('param')
-  // console.log(alternative)
   res.send(alt);
 });
 
