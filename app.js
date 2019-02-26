@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
-// import {login} from 'qps/qps.js'
 
 let qpsPath = `${process.cwd()}/qps/qps`
 const qps = require(qpsPath)
-console.log(qps)
+
 
 
 app.use(express.json());
@@ -13,16 +12,16 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.post('/login', (req, res) => {
-  const data = {
+app.post('/login', async (req, res) => {
+  const body = {
+      type: "login",
       operation: "auth",
-      type : "login",
-      data : {
-        user: "test_user",
-        password : "test_password"
+      data: {
+        user: "elvis",
+        password: "elvis"
       }
     } 
-  const alt = qps.login(data)
+  const alt = await qps.login(JSON.stringify(body))
   console.log(alt)
   res.send(alt);
 });
