@@ -4,8 +4,9 @@ const msgpack = require('msgpack');
 const port = '8808'
 const baseURL = `http://31.13.251.48:${port}`
 
-async function login (data) {
-  const pckg = msgpack.pack(data)
+async function login (req, res) {
+  // console.log(req.body)
+  const pckg = msgpack.pack(JSON.stringify(req.body))
   const packgBase64 = pckg.toString('base64')
   let options = {
     method: 'POST',
@@ -15,8 +16,8 @@ async function login (data) {
   }
   const result = await rp(options).then(res => new Buffer(res, 'base64')).catch(err => console.log(err.message))
   const response = msgpack.unpack(result)
-
-  return response
+  res.send(response)
+  // return response
 }
 
 async function register (data) {
@@ -127,8 +128,12 @@ async function get_item (data) {
   return msgpack.unpack(result)
 }
 
+function test () {
+  console.log('test')
+}
+
 
 // module.exports = {
 //   login
 // }
-module.exports = {login, register, add_device, get_device, get_item, add_item}
+module.exports = {login, register, add_device, get_device, get_item, add_item, test}
