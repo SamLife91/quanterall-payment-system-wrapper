@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
 /// module paths
-const qpsPath = `${process.cwd()}/qps/qps`
-const qps = require(qpsPath)
-
+// const authRouterPath = `${process.cwd()}/routes/auth`;
+// const qps = require(qpsPath)
+const authRouter = require('./routes/auth');
 app.use(express.json());
+app.use('/api/v1/auth', authRouter);
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello World');
+// });
 
 // app.post('/api/v1/login', async (req, res) => {
 //   const result = await qps.login(JSON.stringify(body))
@@ -16,11 +17,13 @@ app.get('/', (req, res) => {
 //   res.send(result);
 // });
 
-// app.post('/api/v1/login', qps.login(req, res));
-app.post('/api/v1/login', (req, res, next) => {
-  qps.login(req, res);
-  next()
-});
+// app.post('/api/v1/login', (req, res) => {
+//   qps.login(req, res);
+// });
+// app.post('/api/v1/login', qps.login);
+// app.post('/api/v1/login', (req, res, next) => {
+//   qps.login(req, res);
+// });
 
 // app.post('/api/v1/register', async (req, res) => {
 //   const result = await qps.register(JSON.stringify(body))
@@ -49,9 +52,9 @@ app.post('/api/v1/login', (req, res, next) => {
 
 // app.post('/api/v1/item/add', qps.add_item(req, res));
 
-app.post('/api/v1/item/get', (req, res) => {
-  qps.test()
-})
+// app.post('/api/v1/item/get', (req, res) => {
+//   qps.test()
+// })
 
 // PORT
 const port = process.env.PORT || 3000;
