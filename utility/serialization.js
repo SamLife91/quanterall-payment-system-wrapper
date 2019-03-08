@@ -1,15 +1,20 @@
 const msgpack = require('msgpack');
 
-function serialize_request (param) {
-  const body = JSON.stringify(param);
+function serialize_request (param, toFiscal = false) {
+  const body = JSON.stringify(param)
   const package = msgpack.pack(body)
-  return package.toString('base64')
+  return toFiscal ? package : package.toString('base64')
 }
+
 
 function serialize_response (response) {
   const binary = new Buffer(response, 'base64')
   return msgpack.unpack(binary)
 }
+
+
+
+
 
 module.exports = {
   serialize_request,
