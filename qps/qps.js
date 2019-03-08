@@ -7,53 +7,53 @@ const msgpack = require('msgpack');
 const port = '8808'
 const baseURL = `http://31.13.251.48:${port}`
 
-async function login (req, res) {
-  const body = serialization.serialize_request(req.body);
-  const options = request.generate_request_options(body)
-  const response = await rp(options)
-        .then(res => serialization.serialize_response(res));
-  if (response.status === 'failed') {
-    res.status(403).send(response.response.message)
-  } else {
-    res.send(response)
-  }
-}
+// async function login (req, res) {
+//   const body = serialization.serialize_request(req.body);
+//   const options = request.generate_request_options(body)
+//   const response = await rp(options)
+//         .then(res => serialization.serialize_response(res));
+//   if (response.status === 'failed') {
+//     res.status(403).send(response.response.message)
+//   } else {
+//     res.send(response)
+//   }
+// }
 
-async function register (req, res) {
-  const body = serialization.serialize_request(req.body);
-  const options = request.generate_request_options(body)
-  const response = await rp(options)
-        .then(res => serialization.serialize_response(res));
-  if (response.status === 'failed') {
-    res.status(403).send(response.response.message)
-  } else {
-    res.send(response)
-  }
-}
+// async function register (req, res) {
+//   const body = serialization.serialize_request(req.body);
+//   const options = request.generate_request_options(body)
+//   const response = await rp(options)
+//         .then(res => serialization.serialize_response(res));
+//   if (response.status === 'failed') {
+//     res.status(403).send(response.response.message)
+//   } else {
+//     res.send(response)
+//   }
+// }
 
-async function add_device (req, res) {
-  const body = serialization.serialize_request(req.body);
-  const options = request.generate_request_options(body)
-  const response = await rp(options)
-        .then(res => serialization.serialize_response(res));
-  if (response.status === 'failed') {
-    res.status(403).send(response.response.message)
-  } else {
-    res.send(response)
-  }
-}
+// async function add_device (req, res) {
+//   const body = serialization.serialize_request(req.body);
+//   const options = request.generate_request_options(body)
+//   const response = await rp(options)
+//         .then(res => serialization.serialize_response(res));
+//   if (response.status === 'failed') {
+//     res.status(403).send(response.response.message)
+//   } else {
+//     res.send(response)
+//   }
+// }
 
-async function get_device (req, res) {
-  const body = serialization.serialize_request(req.body);
-  const options = request.generate_request_options(body)
-  const response = await rp(options)
-        .then(res => serialization.serialize_response(res));
-  if (response.status === 'failed') {
-    res.status(403).send(response.response.message)
-  } else {
-    res.send(response)
-  }
-}
+// async function get_device (req, res) {
+//   const body = serialization.serialize_request(req.body);
+//   const options = request.generate_request_options(body)
+//   const response = await rp(options)
+//         .then(res => serialization.serialize_response(res));
+//   if (response.status === 'failed') {
+//     res.status(403).send(response.response.message)
+//   } else {
+//     res.send(response)
+//   }
+// }
 
 async function add_item (data, res) {
   const pckg = msgpack.pack(data)
@@ -100,8 +100,6 @@ async function add_item (data, res) {
     const decoded = await rp(decodeOptions).then(res => Buffer(res, 'base64')).catch(err => console.log(err.msg))
     return res.status(200).send(msgpack.unpack(decoded))
   }
-  
-  
 } 
 
 async function get_item (data) {

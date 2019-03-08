@@ -3,9 +3,14 @@ const app = express();
 /// module paths
 // const authRouterPath = `${process.cwd()}/routes/auth`;
 // const qps = require(qpsPath)
-const authRouter = require('./routes/auth');
+const auth = require('./routes/auth');
+const device = require('./routes/device');
+const item = require('./routes/item');
+
 app.use(express.json());
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/auth', auth);
+app.use('/api/v1/device', device);
+app.use('/api/v1/item', item);
 
 // app.get('/', (req, res) => {
 //   res.send('Hello World');
