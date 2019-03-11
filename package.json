@@ -22,6 +22,7 @@
     "express": "^4.16.4",
     "js-base64": "^2.5.1",
     "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
     "msgpack": "^1.0.2",
     "msgpack-lite": "^0.1.26",
     "request": "^2.88.0",
