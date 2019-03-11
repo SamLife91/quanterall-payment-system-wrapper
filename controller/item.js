@@ -15,11 +15,10 @@ async function add_item(req, res) {
     res.status(403).send(response)
   } else {
     console.log(response.response.message[0])
-    // const fiscal_command = base64.decode(response.response.message[0])
     const fiscal_command = base64.decode(response.response.message[0])
     console.log(fiscal_command)
 
-    const fiscal_options = request.generate_fiscal_device_options(JSON.stringify(fiscal_command));
+    const fiscal_options = request.generate_fiscal_device_options(fiscal_command);
     const fiscal_response = await rp(fiscal_options).then(res => JSON.parse(res)).catch((err) => res.status(500).send(err));
     console.log('******************')
     console.log(fiscal_response)
