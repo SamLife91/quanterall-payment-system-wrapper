@@ -5,6 +5,8 @@ const timeout = require('connect-timeout');
 const auth = require('./routes/auth');
 const device = require('./routes/device');
 const item = require('./routes/item');
+const receipt = require('./routes/receipt')
+
 const morgan = require('morgan')
 
 app.use(timeout('600s'));
@@ -13,6 +15,7 @@ app.use(morgan('tiny'));
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/device', device);
 app.use('/api/v1/item', item);
+app.use('/api/v1/receipt', receipt);
 
 // PORT
 const port = process.env.PORT || 3000;
