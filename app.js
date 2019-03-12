@@ -1,15 +1,13 @@
 const express = require('express');
 const app = express();
-/// module paths
-// const authRouterPath = `${process.cwd()}/routes/auth`;
-// const qps = require(qpsPath)
+const timeout = require('connect-timeout');
 
 const auth = require('./routes/auth');
 const device = require('./routes/device');
 const item = require('./routes/item');
-
 const morgan = require('morgan')
 
+app.use(timeout('600s'));
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use('/api/v1/auth', auth);
@@ -18,6 +16,7 @@ app.use('/api/v1/item', item);
 
 // PORT
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`listening on port ${port}...`);
 })
+server.timeout = 1000000;

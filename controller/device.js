@@ -11,20 +11,9 @@ async function add_device (req, res) {
   if (response.status === 'failed') {
     res.status(403).send(response.response)
   } else {
-    // res.send(response
-    console.log('********')
-    console.log(response)
-    console.log('********')
-    console.log(response.response.message.activate_command)
     const fiscal_command = base64.decode(response.response.message.activate_command)
-    console.log(fiscal_command)
     const fiscal_options = request.generate_fiscal_device_options(fiscal_command)
-    const fiscal_response = await rp(fiscal_options).then(res => JSON.parse(res)).catch(err => res.send(err))
-    // res.send(fiscal_response)
-    console.log('============')
-    console.log(fiscal_response)
-    console.log('============')
-
+    const fiscal_response = await rp(fiscal_options).then(res => JSON.parse(res)).catch(err => res.status(500).send(err))
     const activate_device_body = {
       auth: {
         token: req.body.auth.token,
@@ -41,14 +30,7 @@ async function add_device (req, res) {
     }
     
     const active_device_options = request.generate_request_options(JSON.stringify(activate_device_body))
-
-    console.log('...............')
-    console.log(active_device_options)
-    console.log('...............')
     const active_device_request = await rp(active_device_options).then(res => JSON.parse(res)).catch(err => console.log(err))
-    console.log('-=-=-=-=-=-=')
-    console.log(active_device_request)
-    console.log('-=-=-=-=-=-=')
     res.send(active_device_request)
   }
 }
@@ -71,10 +53,29 @@ async function activate_device (req, res) {
 }
 
 async function status (req, res) {
-  console.log('test')
   const options = request.generate_request_options(JSON.stringify(req.body))
-  const response = await rp(options).then(res => JSON.parse(res))
-  res.send(response)
+  const response = await rp(options).then(res => JSON.parse(res)).catch(err => res.status(500).send(err))
+  const fiscal_command = base64.decode(response.response.message[0])
+  const fiscal_options = request.generate_fiscal_device_options(fiscal_command)
+  const fiscal_response = await rp(fiscal_options).then(res => JSON.parse(res)).catch(err => res.status(500).send(err))
+  
+  const device_command_body = {
+    operation: "parse_response",
+    type: "device_status",
+    auth: {
+      user: req.body.auth.user,
+      token: req.body.auth.token
+    },
+    data: {
+      device: {
+        id: req.body.data.device.id
+      },
+      data: fiscal_response.message
+    }
+  }
+  const device_status_options = request.generate_request_options(JSON.stringify(device_command_body))
+  const device_status = await rp(device_status_options).then(res => JSON.parse(res)).catch(err => res.status(500).send(err));
+  res.status(200).send(device_status);
 }
 
 module.exports = {

@@ -13,7 +13,6 @@ function generate_request_options (body) {
 }
 
 function generate_fiscal_device_options (body) {
-  console.log(body)
   return {
     method: 'POST',
     url: fiscalURL,

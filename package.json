@@ -19,6 +19,7 @@
   "homepage": "https://github.com/SamLife91/quanterall-payment-system-wrapper#readme",
   "dependencies": {
     "base64-arraybuffer-converter": "^1.0.3",
+    "connect-timeout": "^1.9.0",
     "express": "^4.16.4",
     "js-base64": "^2.5.1",
     "lodash": "^4.17.11",
