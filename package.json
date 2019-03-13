@@ -4,6 +4,8 @@
   "description": "express.js wrapper to qps api",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
+    "deploy": "npm install && node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
