@@ -20,7 +20,37 @@ function generate_fiscal_device_options (body) {
     json: false
   }
 }
+
+function generate_body_from_fiscal_response (params) {
+  const {type, user, token, id, binary} = {...params};
+  return {
+    operation: 'parse_response',
+    type: type,
+    auth: {
+      user: user,
+      token: token
+    },
+    data: {
+      device: {
+        id: id
+      },
+      data: binary
+    }
+  }
+}
+
+function generate_parse_response_params (type, req, data) {
+  return {
+    type: type,
+    user: req.body.auth.user,
+    token: req.body.auth.token,
+    id: req.body.data.device.id,
+    binary: data
+  }
+}
 module.exports = {
   generate_request_options,
-  generate_fiscal_device_options
+  generate_fiscal_device_options,
+  generate_body_from_fiscal_response,
+  generate_parse_response_params
 }
