@@ -1,9 +1,9 @@
-const dotenv = require('dotenv');
+require('dotenv').config();
 
-const port = '8808';
-const printerPort = '8800'
-const baseURL = `http://31.13.251.48:${port}`;
-const fiscalURL = `http://192.168.0.150:${printerPort}`;
+const port = process.env.API_URL_PORT;
+const printerPort = process.env.FISCAL_DEVICE_PORT
+const baseURL = `${process.env.API_URL}:${port}`;
+const fiscalURL = `${process.env.FISCAL_DEVICE_URL}:${printerPort}`;
 
 
 
