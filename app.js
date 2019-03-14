@@ -11,6 +11,7 @@ const item = require('./routes/item');
 const morgan = require('morgan')
 
 app.use(express.json());
+app.use('/apidoc', express.static('apidoc'));
 app.use(morgan('tiny'));
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/device', device);
