@@ -5,9 +5,10 @@ const timeout = require('connect-timeout');
 const auth = require('./routes/auth');
 const device = require('./routes/device');
 const item = require('./routes/item');
-const receipt = require('./routes/receipt')
+const receipt = require('./routes/receipt');
 
-const morgan = require('morgan')
+const morgan = require('morgan');
+require('dotenv').config();
 
 app.use(timeout('600s'));
 app.use(express.json());
