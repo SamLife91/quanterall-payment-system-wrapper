@@ -8,7 +8,7 @@ const item = require('./routes/item');
 const receipt = require('./routes/receipt');
 
 const morgan = require('morgan');
-require('dotenv').config();
+
 
 app.use(timeout('600s'));
 app.use(express.json());
