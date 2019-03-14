@@ -84,7 +84,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "./controller/auth.js",
+    "filename": "./routes/doc.js",
     "groupTitle": "Auth"
   },
   {
@@ -166,7 +166,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "./controller/auth.js",
+    "filename": "./routes/doc.js",
     "groupTitle": "Auth"
   },
   {
@@ -248,7 +248,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "./controller/device.js",
+    "filename": "./routes/doc.js",
     "groupTitle": "Device"
   },
   {
@@ -330,7 +330,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "./controller/device.js",
+    "filename": "./routes/doc.js",
     "groupTitle": "Device"
   },
   {
@@ -412,7 +412,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "./controller/device.js",
+    "filename": "./routes/doc.js",
     "groupTitle": "Device"
   },
   {
@@ -494,7 +494,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "./controller/device.js",
+    "filename": "./routes/doc.js",
     "groupTitle": "Device"
   },
   {
@@ -569,7 +569,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "./controller/item.js",
+    "filename": "./routes/doc.js",
     "groupTitle": "Item"
   },
   {
