@@ -27,5 +27,9 @@
     "msgpack-lite": "^0.1.26",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
+  },
+  "apidoc": {
+    "title": "Users API",
+    "url" : "https://localhost:3000"
   }
 }
