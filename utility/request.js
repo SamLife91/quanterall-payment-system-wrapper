@@ -1,7 +1,11 @@
-const port = '8808';
-const printerPort = '8800'
-const baseURL = `http://31.13.251.48:${port}`;
-const fiscalURL = `http://192.168.0.150:${printerPort}`;
+require('dotenv').config();
+
+const port = process.env.API_URL_PORT;
+const printerPort = process.env.FISCAL_DEVICE_PORT
+const baseURL = `${process.env.API_URL}:${port}`;
+const fiscalURL = `${process.env.FISCAL_DEVICE_URL}:${printerPort}`;
+
+
 
 function generate_request_options (body) {
   return {
@@ -13,7 +17,6 @@ function generate_request_options (body) {
 }
 
 function generate_fiscal_device_options (body) {
-  console.log(body)
   return {
     method: 'POST',
     url: fiscalURL,
@@ -21,7 +24,37 @@ function generate_fiscal_device_options (body) {
     json: false
   }
 }
+
+function generate_body_from_fiscal_response (params) {
+  const {type, user, token, id, binary} = {...params};
+  return {
+    operation: 'parse_response',
+    type: type,
+    auth: {
+      user: user,
+      token: token
+    },
+    data: {
+      device: {
+        id: id
+      },
+      data: binary
+    }
+  }
+}
+
+function generate_parse_response_params (type, req, data) {
+  return {
+    type: type,
+    user: req.body.auth.user,
+    token: req.body.auth.token,
+    id: req.body.data.device.id,
+    binary: data
+  }
+}
 module.exports = {
   generate_request_options,
-  generate_fiscal_device_options
+  generate_fiscal_device_options,
+  generate_body_from_fiscal_response,
+  generate_parse_response_params
 }
