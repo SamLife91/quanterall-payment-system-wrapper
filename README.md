@@ -2,8 +2,8 @@
 express.js wrapper to qps api
 
 ## Requirements
-- node:
-- npm:
+- node:  8.X^
+- npm:  5.X^
 
 ## Installation
 
@@ -23,7 +23,7 @@ FISCAL_DEVICE_PORT = xxxx
 ### Via POSTMAN
 - import already created POSTMAN file 'Quanterall Payment.postman_collection.json' ()
 
-## RESTfil endpoints
+## RESTful endpoints
 ### AUTH
 #### LOGIN
 Login 
