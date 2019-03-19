@@ -21,7 +21,7 @@ app.use('/api/v1/receipt', receipt);
 
 // PORT
 const port = process.env.PORT || 3000;
-const server = app.listen(port, () => {
+const server = app.listen(port,"0.0.0.0", () => {
   console.log(`listening on port ${port}...`);
 })
 server.timeout = 1000000;
