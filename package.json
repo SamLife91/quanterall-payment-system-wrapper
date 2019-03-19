@@ -6,6 +6,7 @@
   "scripts": {
     "config": "node setup.js",
     "start": "node app.js",
+    "prod": "NODE_ENV=production node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
