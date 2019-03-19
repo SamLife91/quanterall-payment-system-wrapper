@@ -129,6 +129,23 @@ get device status
 }
 ```
 
+#### GET ALL DEVICE's
+get all user devices
+##### POST '/api/v1/device/list'
++ Method: `POST`
++ URL: `/api/v1/device/list`
++ Body:
+```js
+{
+  "operation": "system",
+  "type": "get_all_devices",
+  "auth": {
+    "user": "test_user",
+    "token": "test_user_token"
+  }
+}
+```
+
 #### GET DEVICE DATE AND TIME
 get current date and time of device
 ##### POST '/api/v1/device/get-time'
@@ -224,6 +241,136 @@ get item from fiscal device
   "data": {
     "item_data": {
       "number": "1"
+    },
+    "device": {
+      "id": "1"
+    }
+  }
+}
+```
+
+#### GET ALL ITEMS
+get all items from fiscal device
+##### POST '/api/v1/item/all'
++ Method: `POST`
++ URL: `/api/v1/item/all`
++ Body:
+```js
+{
+  "operation": "build_command",
+  "type": "get_first_item",
+  "auth": {
+    "user": "test_user",
+    "token": "test_user_token"
+  },
+  "data": {
+    "device": {
+      "id": "1"
+    }
+  }
+}
+```
+
+### FISCAL OPERATIONS
+
+#### FISCAL RECEIPT
+trigger fiscal device to print receipt
+##### POST '/api/v1/receipt/fiscal'
++ Method: `POST`
++ URL: `/api/v1/receipt/fiscal`
++ Body:
+```js
+{
+  "operation": "build_command",
+  "type": "fiscal_receipt",
+  "auth": {
+    "user": "test_user",
+    "token": "test_user_token"
+  },
+  "data": {
+    "items": [
+      {
+        "price": "0.01",
+        "product": "Пуканки",
+        "quantity": "1"
+      },
+      {
+        "price": "0.01",
+        "product": "Вафла",
+        "quantity": "2"
+      }
+    ],
+    "operator": {
+      "name": "test_operator_name",
+      "num": "1",
+      "pwd": "0000"
+    },
+    "paidmode": "cash",
+    "tax_type": "B",
+    "till_num": "1",
+    "device": {
+      "id": "1"
+    }
+  }
+}
+```
+
+#### NON-FISCAL RECEIPT
+trigger fiscal device to print non-fiscal receipt
+##### POST '/api/v1/receipt/non-fiscal'
++ Method: `POST`
++ URL: `/api/v1/receipt/non-fiscal`
++ Body:
+```js
+{
+  "operation": "build_command",
+  "type": "non_fiscal_receipt",
+  "auth": {
+    "user": "test_user",
+    "token": "test_user_token"
+  },
+  "data": {
+    "text": 
+    [
+      "Non fiscal receipt text 1",
+      "Non fiscal receipt text 2"
+    ],
+    "device": {
+      "id": "1"
+    }
+  }
+}
+```
+
+
+#### REVERSAL RECEIPT
+trigger fiscal device to print reversal receipt
+##### POST '/api/v1/receipt/reversal'
++ Method: `POST`
++ URL: `/api/v1/receipt/reversal`
++ Body:
+```js
+{
+  "operation": "build_command",
+  "type": "reversal",
+  "auth": {
+    "user": "test_user",
+    "token": "test_user_token"
+  },
+  "data": {
+    "reversal_data": {
+      "operator": {"name": "pesho", "num": "1", "pwd": "1"},
+      "till_num": "1",
+      "tax_type": "Б",
+      "unp": "DT518231-0001-0000015",
+      "document_type": "2",
+      "document_number": "34",
+      "document_date_time": "2702191208",
+      "fm_number": "02518231",
+      "reason": "не ме кефят пуканки 2",
+      "items": [
+        {"price": "0.01", "product": "Пуканки", "quantity": "1"}
+      ]	  
     },
     "device": {
       "id": "1"
