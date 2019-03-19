@@ -1,27 +1,26 @@
 const express = require('express');
 const app = express();
-const fetch = require('node-fetch');
+
+const auth = require('./routes/auth');
+const device = require('./routes/device');
+const item = require('./routes/item');
+const receipt = require('./routes/receipt');
+const operator = require('./routes/operator');
+
+const morgan = require('morgan');
+
 
 app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
-app.get('/api/courses', async (req, res) => {
-  const result = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-  .then(response => response.json())
-  console.log(result);
-  res.send(result);
-});
-
-app.get('/api/courses/:id', (req, res) => {
-  // get route params
-  res.send(req.params);
-})
+app.use(morgan('tiny'));
+app.use('/api/v1/auth', auth);
+app.use('/api/v1/device', device);
+app.use('/api/v1/item', item);
+app.use('/api/v1/receipt', receipt);
+app.use('/api/v1/operator', operator);
 
 // PORT
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, '0.0.0.0', () => {
   console.log(`listening on port ${port}...`);
 })
+server.timeout = 1000000;

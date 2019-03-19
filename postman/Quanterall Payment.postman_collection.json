@@ -1,0 +1,997 @@
+{
+	"info": {
+		"_postman_id": "34851d99-4a0b-4ab9-a1e7-e8fbc81bc14b",
+		"name": "Quanterall Payment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get First Item",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"operation\": \"build_command\",\n\t\"type\": \"get_first_item\",\n\t\"auth\": {\n\t\"user\": \"test_user\",\n\t\"token\": \"test_user_token\"\n\t},\n\t\"data\": {\n\t\"device\": {\n\t\t\"id\": \"1\"\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/get_first1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"get_first1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"operation\": \"parse_response\",\n\t\"type\": \"get_first_item\",\n\t\"auth\": {\n\t\"user\": \"test_user\",\n\t\"token\" : \"test_user_token\"\n\t},\n\t\"data\": {\n\t\t\"device\":\n\t\t{\n\t\t  \"id\": \"1\"\n\t\t},\n\t\t\"data\": \"base64_encoded_binary\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/get_first2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"get_first2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Next Item",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"get_next_item\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/get_next1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"get_next1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"parse_response\",\n  \"type\": \"get_next_item\",\n  \"auth\": {\n     \"user\": \"test_user\", \n     \"token\" : \"test_user_token\"\n },\n  \"data\": {\n    \"device\":\n    {\n      \"id\": \"1\"\n    },\n  \"data\": \"base64_encoded_binary\"\n }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/get_next2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"get_next2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fiscal Receipt",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"fiscal_receipt\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"items\": [\n      {\n        \"price\": \"0.01\",\n        \"product\": \"Пуканки\",\n        \"quantity\": \"1\"\n      },\n      {\n        \"price\": \"0.01\",\n        \"product\": \"Вафла\",\n        \"quantity\": \"2\"\n      }\n    ],\n    \"operator\": {\n      \"name\": \"test_operator_name\",\n      \"num\": \"1\",\n      \"pwd\": \"0000\"\n    },\n    \"paidmode\": \"cash\",\n    \"tax_type\": \"B\",\n    \"till_num\": \"1\",\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/fiscal_receipt1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"fiscal_receipt1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"parse_response\",\n  \"type\": \"fiscal_receipt\",\n  \"auth\": {\n     \"user\": \"test_user\", \n     \"token\" : \"test_user_token\"\n },\n  \"data\": {\n    \"device\":\n    {\n      \"id\": \"1\"\n    },\n  \"data\": \"each_base64_encoded_binary\"\n }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/fiscal_receipt2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"fiscal_receipt2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Non-Fiscal Receipt",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"non_fiscal_receipt\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"text\": \n    [\n      \"Non fiscal receipt text 1\",\n      \"Non fiscal receipt text 2\"\n    ],\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/non-fiscal_receipt1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"non-fiscal_receipt1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"parse_response\",\n  \"type\": \"non_fiscal_receipt\",\n  \"auth\": {\n     \"user\": \"test_user\", \n     \"token\" : \"test_user_token\"\n },\n  \"data\": {\n    \"device\":\n    {\n      \"id\": \"1\"\n    },\n  \"data\": \"each_base64_encoded_binary\"\n }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/non-fiscal_receipt2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"non-fiscal_receipt2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reversal Receipt",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"reversal\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"reversal_data\": {\n      \"operator\": {\"name\": \"pesho\", \"num\": \"1\", \"pwd\": \"1\"},\n      \"till_num\": \"1\",\n      \"tax_type\": \"Б\",\n      \"unp\": \"DT518231-0001-0000015\",\n      \"document_type\": \"2\",\n      \"document_number\": \"34\",\n      \"document_date_time\": \"2702191208\",\n      \"fm_number\": \"02518231\",\n      \"reason\": \"не ме кефят пуканки 2\",\n      \"items\": [\n        {\"price\": \"0.01\", \"product\": \"Пуканки\", \"quantity\": \"1\"}\n      ]\t  \n    },\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/reversal_receipt1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"reversal_receipt1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"parse_response\",\n  \"type\": \"reversal\",\n  \"auth\": {\n     \"user\": \"test_user\", \n     \"token\" : \"test_user_token\"\n },\n  \"data\": {\n    \"device\":\n    {\n      \"id\": \"1\"\n    },\n  \"data\": \"each_base64_encoded_binary\"\n }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/reversal_receipt2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"reversal_receipt2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Time and Date",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"get_time_and_date\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/get_time_date1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"get_time_date1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"parse_response\",\n  \"type\": \"get_time_and_date\",\n  \"auth\": {\n     \"user\": \"test_user\", \n     \"token\" : \"test_user_token\"\n },\n  \"data\": {\n    \"device\":\n    {\n      \"id\": \"1\"\n    },\n  \"data\": \"base64_encoded_binary\"\n }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/get_time_date2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"get_time_date2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Set Time and Date",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"set_time_and_date\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"clock\": \"DD-MM-YY HH:MM:SS\",\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/set_time_date1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"set_time_date1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"parse_response\",\n  \"type\": \"set_time_and_date\",\n  \"auth\": {\n     \"user\": \"test_user\", \n     \"token\" : \"test_user_token\"\n },\n  \"data\": {\n    \"device\":\n    {\n      \"id\": \"1\"\n    },\n  \"data\": \"base64_encoded_binary\"\n }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/item/set_time_date2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"set_time_date2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Device Status",
+			"item": [
+				{
+					"name": "Request 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"device_status\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/device/get_status1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"device",
+								"get_status1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"parse_response\",\n  \"type\": \"device_status\",\n  \"auth\": {\n     \"user\": \"test_user\", \n     \"token\" : \"test_user_token\"\n },\n  \"data\": {\n    \"device\":\n    {\n      \"id\": \"1\"\n    },\n  \"data\": \"base64_encoded_binary\"\n }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/device/get_status2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"device",
+								"get_status2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"login\",\n  \"operation\": \"auth\",\n  \"data\": {\n    \"user\": \"elvis\",\n    \"password\": \"elvis\"\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fiscal Receipt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"fiscal_receipt\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"items\": [\n      {\n        \"price\": \"0.01\",\n        \"product\": \"Пуканки\",\n        \"quantity\": \"1\"\n      },\n      {\n        \"price\": \"0.01\",\n        \"product\": \"Вафла\",\n        \"quantity\": \"2\"\n      }\n    ],\n    \"operator\": {\n      \"name\": \"test_operator_name\",\n      \"num\": \"1\",\n      \"pwd\": \"0000\"\n    },\n    \"paidmode\": \"cash\",\n    \"tax_type\": \"B\",\n    \"till_num\": \"1\",\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/fiscal_receipt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"fiscal_receipt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Non-Fiscal Receipt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"non_fiscal_receipt\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"text\": \n    [\n      \"Non fiscal receipt text 1\",\n      \"Non fiscal receipt text 2\"\n    ],\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/non-fiscal_receipt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"non-fiscal_receipt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reversal Receipt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"reversal\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"reversal_data\": {\n      \"operator\": {\"name\": \"pesho\", \"num\": \"1\", \"pwd\": \"1\"},\n      \"till_num\": \"1\",\n      \"tax_type\": \"Б\",\n      \"unp\": \"DT518231-0001-0000015\",\n      \"document_type\": \"2\",\n      \"document_number\": \"34\",\n      \"document_date_time\": \"2702191208\",\n      \"fm_number\": \"02518231\",\n      \"reason\": \"не ме кефят пуканки 2\",\n      \"items\": [\n        {\"price\": \"0.01\", \"product\": \"Пуканки\", \"quantity\": \"1\"}\n      ]\t  \n    },\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/reversal_receipt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"reversal_receipt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Time and Date",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"get_time_and_date\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/get_time_date",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"get_time_date"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Time and Date",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"set_time_and_date\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"clock\": \"DD-MM-YY HH:MM:SS\",\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/set_time_date",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"set_time_date"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Device Status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"operation\": \"build_command\",\n  \"type\": \"device_status\",\n  \"auth\": {\n    \"user\": \"test_user\",\n    \"token\": \"test_user_token\"\n  },\n  \"data\": {\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/device/get_status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"device",
+						"get_status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"operation\": \"build_command\",\n\t\"type\": \"get_first_item\",\n\t\"auth\": {\n\t\"user\": \"test_user\",\n\t\"token\": \"test_user_token\"\n\t},\n\t\"data\": {\n\t\"device\": {\n\t\t\"id\": \"1\"\n\t\t}\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"register\",\n\t\"operation\": \"auth\",\n\t\"data\": {\n\t  \"user\": \"arslan\",\n\t  \"password\": \"arslan_password\",\n\t  \"mail\": \"arslan@mail.arslan\",\n\t  \"first_name\": \"arslan\",\n\t  \"last_name\": \"arslan\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Device",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"add_device\",\n  \"operation\": \"system\",\n  \"auth\": {\n    \"user\": \"arslan\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyIjoiZWx2aXMiLCJleHAiOjE1NTI0MzYwODF9.eB9eJHf_FkdoJPvc2j8S4dkU2Vcp--XcXzKQkdc2LTxOa9lmYPMHcrZIEHVIarABaKW6DlrMpEPpt0RYEf86hRD684LcgQgC_bevkg3Wh2HSOTlI4SQT1JeFENsexfubBpMI1giUA7Gk3DvQruoHlDeX-YskpgDqVBju-EBFUIFhcBoBwNTFzV3xRQunQW6lEU7FbO3SzECreBbWfJ_MEAf2DAErrY474Bo8YgfHuNy6KU97L9Zb3H3ZY7S8cPMkOuarZGfn5I4xRargeYfr7_AIG-NSPAbLo4W8LY0UmPvNM8wjJ43xEEaNsC0-ItemXMaFpxkMQJtnq1uMIKHAzw\"\n  },\n  \"data\": {\n    \"type\": \"fiscal\",\n    \"manufacture\": \"datecs\",\n    \"model\": \"fp-60kl\",\n    \"serial_number\": \"dt2742k875\"\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/device/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"device",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"get_all_devices\",\n  \"operation\": \"system\",\n  \"auth\": {\n    \"user\": \"elvis\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyIjoiZWx2aXMiLCJleHAiOjE1NTI0MzYwODF9.eB9eJHf_FkdoJPvc2j8S4dkU2Vcp--XcXzKQkdc2LTxOa9lmYPMHcrZIEHVIarABaKW6DlrMpEPpt0RYEf86hRD684LcgQgC_bevkg3Wh2HSOTlI4SQT1JeFENsexfubBpMI1giUA7Gk3DvQruoHlDeX-YskpgDqVBju-EBFUIFhcBoBwNTFzV3xRQunQW6lEU7FbO3SzECreBbWfJ_MEAf2DAErrY474Bo8YgfHuNy6KU97L9Zb3H3ZY7S8cPMkOuarZGfn5I4xRargeYfr7_AIG-NSPAbLo4W8LY0UmPvNM8wjJ43xEEaNsC0-ItemXMaFpxkMQJtnq1uMIKHAzw\"\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/device/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"device",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"add_item\",\n  \"operation\": \"build_command\",\n  \"auth\": {\n    \"user\": \"elvis\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyIjoiZWx2aXMiLCJleHAiOjE1NTI0MzYwODF9.eB9eJHf_FkdoJPvc2j8S4dkU2Vcp--XcXzKQkdc2LTxOa9lmYPMHcrZIEHVIarABaKW6DlrMpEPpt0RYEf86hRD684LcgQgC_bevkg3Wh2HSOTlI4SQT1JeFENsexfubBpMI1giUA7Gk3DvQruoHlDeX-YskpgDqVBju-EBFUIFhcBoBwNTFzV3xRQunQW6lEU7FbO3SzECreBbWfJ_MEAf2DAErrY474Bo8YgfHuNy6KU97L9Zb3H3ZY7S8cPMkOuarZGfn5I4xRargeYfr7_AIG-NSPAbLo4W8LY0UmPvNM8wjJ43xEEaNsC0-ItemXMaFpxkMQJtnq1uMIKHAzw\"\n  },\n  \"data\": {\n    \"item_data\": {\n      \"group\": \"1\",\n      \"name\": \"test_item_name\",\n      \"number\": \"1\",\n      \"quantity\": \"1\",\n      \"price\": \"1.00\",\n      \"tax_group\": \"Б\"\n    },\n    \"device\": {\n      \"id\": \"36\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"get_item\",\n  \"operation\": \"build_command\",\n  \"auth\": {\n    \"user\": \"elvis\",\n    \"token\": \"user_token\"\n  },\n  \"data\": {\n    \"item_data\": {\n      \"number\": \"1\"\n    },\n    \"device\": {\n      \"id\": \"1\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/get",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"get"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
