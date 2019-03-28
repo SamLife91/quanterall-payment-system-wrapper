@@ -9,4 +9,6 @@ router.post('/status', device.status)
 router.post('/get-time',device.get_time)
 router.post('/set-time', device.set_time)
 
+router.post('/documents', device.documents)
+
 module.exports = router

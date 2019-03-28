@@ -9,7 +9,7 @@ const baseURL = `http://31.13.251.48:${port}`
 
 // async function login (req, res) {
 //   const body = serialization.serialize_request(req.body);
-//   const options = request.generate_request_options(body)
+//   const options = request.gen_options(body)
 //   const response = await rp(options)
 //         .then(res => serialization.serialize_response(res));
 //   if (response.status === 'failed') {
@@ -21,7 +21,7 @@ const baseURL = `http://31.13.251.48:${port}`
 
 // async function register (req, res) {
 //   const body = serialization.serialize_request(req.body);
-//   const options = request.generate_request_options(body)
+//   const options = request.gen_options(body)
 //   const response = await rp(options)
 //         .then(res => serialization.serialize_response(res));
 //   if (response.status === 'failed') {
@@ -33,7 +33,7 @@ const baseURL = `http://31.13.251.48:${port}`
 
 // async function add_device (req, res) {
 //   const body = serialization.serialize_request(req.body);
-//   const options = request.generate_request_options(body)
+//   const options = request.gen_options(body)
 //   const response = await rp(options)
 //         .then(res => serialization.serialize_response(res));
 //   if (response.status === 'failed') {
@@ -45,7 +45,7 @@ const baseURL = `http://31.13.251.48:${port}`
 
 // async function get_device (req, res) {
 //   const body = serialization.serialize_request(req.body);
-//   const options = request.generate_request_options(body)
+//   const options = request.gen_options(body)
 //   const response = await rp(options)
 //         .then(res => serialization.serialize_response(res));
 //   if (response.status === 'failed') {

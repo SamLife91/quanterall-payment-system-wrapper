@@ -7,7 +7,7 @@ const fiscalURL = `${process.env.FISCAL_DEVICE_URL}:${printerPort}`;
 
 
 
-function generate_request_options (body) {
+function gen_options (body) {
   return {
     method: 'POST',
     url: baseURL,
@@ -16,7 +16,7 @@ function generate_request_options (body) {
   }
 }
 
-function generate_fiscal_device_options (body) {
+function gen_device_options (body) {
   return {
     method: 'POST',
     url: fiscalURL,
@@ -25,7 +25,7 @@ function generate_fiscal_device_options (body) {
   }
 }
 
-function generate_body_from_fiscal_response (params) {
+function gen_body (params) {
   const {type, user, token, id, binary} = {...params};
   
   return {
@@ -44,7 +44,7 @@ function generate_body_from_fiscal_response (params) {
   }
 }
 
-function generate_parse_response_params (type, req, data, id = null) {
+function gen_params (type, req, data, id = null) {
   return {
     type: type,
     user: req.body.auth.user,
@@ -54,8 +54,8 @@ function generate_parse_response_params (type, req, data, id = null) {
   }
 }
 module.exports = {
-  generate_request_options,
-  generate_fiscal_device_options,
-  generate_body_from_fiscal_response,
-  generate_parse_response_params
+  gen_options,
+  gen_device_options,
+  gen_body,
+  gen_params
 }
