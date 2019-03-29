@@ -1,30 +1,33 @@
-const rp = require('request-promise');
-const request = require('../utility/request');
+// const rp = require('request-promise');
+// const request = require('../utility/request');
+const axios = require("axios")
 
-async function login (req, res, next) {
-  const options = request.gen_options(JSON.stringify(req.body))
-  const response = await rp(options)
-    .then(response => JSON.parse(response))
-    .catch(err => res.status(500).send(err))
-  if (response.status === 'failed') {
-    const error = new Error(response.response.message)
+async function login (req, res, next) { 
+  const result = await axios.post('http://31.13.251.48:8808', req.body)
+  .catch(() => {
+    const error = new Error('service is down')
+    return next(error)
+  })
+  if (result.data.status === 'failed') {
+    const error = new Error(result.data.response.message)
     error.status = 404
     return next(error)
   }
-  res.send(response)
+  res.send(result.data.response.message.token)
 }
 
 async function register (req, res, next) {
-  const options = request.gen_options(JSON.stringify(req.body))
-  const response = await rp(options)
-    .then(res => JSON.parse(res))
-    .catch(err => res.status(403).send(err));
-    if (response.status === 'failed') {
-      const error = new Error(response.response.message)
-      error.status = 409
-      return next(error)
-    }
-  res.send(response)
+  const result = await axios.post('http://31.13.251.48:8808', req.body)
+  .catch(() => {
+    const error = new Error('service is down')
+    return next(error)
+  })
+  if (result.data.status === 'failed') {
+    const error = new Error(result.data.response.message)
+    error.status = 409
+    return next(error)
+  }
+  res.send(result.data.response.message)
 }
 
 module.exports = { login, register }

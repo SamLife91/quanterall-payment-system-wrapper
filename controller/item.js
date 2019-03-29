@@ -1,30 +1,38 @@
-const rp = require('request-promise');
+// const rp = require('request-promise');
 const request = require('../utility/request');
 const base64 = require('../utility/base64')
+const axios = require('axios');
 
-async function add_item(req, res) {
-  const options = request.gen_options(JSON.stringify(req.body))
-  const response = await rp(options)
-    .then(res => JSON.parse(res))
-    .catch(err => res.status(403).send(err));
-  if (!Array.isArray(response.response.message)) {
-    res.status(403).send(response.response.message)
+require('dotenv').config();
+
+const port = `${process.env.API_URL_PORT}`;
+const printerPort = `${process.env.FISCAL_DEVICE_PORT}`;
+const baseURL = `${process.env.API_URL}:${port}`;
+const fiscalURL = `${process.env.FISCAL_DEVICE_URL}:${printerPort}`;
+
+async function add_item(req, res, next) {
+  const result = await axios.post(baseURL, req.body).catch(() => {
+    const error = new Error('service is down')
+    error.status = 500
+    return next(error)
+  })
+  if (!Array.isArray(result.data.response.message)) {
+    res.status(403).send(result.data.response.message)
   } else {
-    const fiscal_command = base64.decode(response.response.message[0])
-    const fiscal_options = request.gen_device_options(fiscal_command);
-    const fiscal_response = await rp(fiscal_options)
-      .then(res => JSON.parse(res))
-      .catch((err) => res.status(500).send(err));
-    if (fiscal_response.message === '') {
-      res.status(500).send('fiscal device error')
+    const command = base64.decode(result.data.response.message[0])
+    const fs_result = await axios.post(fiscalURL, command).catch(() => {
+
+    })
+    console.log(fs_result.data)
+    if (fs_result.data.message === '') {
+      const error = new Error('error device')
+      error.status = 500
+      return next(error)
     } else {
-      const params = request.gen_params('add_item', req, fiscal_response.message);
+      const params = request.gen_params('add_item', req, fs_result.data.message);
       const parse_response_body = request.gen_body(params)
-      const parse_response_options = request.gen_options(JSON.stringify(parse_response_body))
-      const parse_response_request = await rp(parse_response_options)
-        .then(res => JSON.parse(res))
-        .catch((err) => res.status(500).send(err));
-      res.status(200).send(parse_response_request);
+      const item = await axios.post(baseURL, parse_response_body)
+      res.send(item.data.response.message)
     }
   }
 }
@@ -35,7 +43,7 @@ async function get_item(req, res) {
   const response = await rp(options)
     .then(res => JSON.parse(res))
     .catch(err => res.status(404).send(err))
-    console.log(response.response)
+  console.log(response.response)
   if (!Array.isArray(response.response.message)) {
     res.status(403).send(response.response.message)
   } else {
@@ -58,29 +66,45 @@ async function get_item(req, res) {
   }
 }
 
-async function get_all_items(req, res) {
+async function get_all_items(req, res, next) {
   let items = [];
+  const fi = await axios.post(baseURL, req.body).catch(() => {
+    const error = new Error('service is down')
+    error.status = 500
+    return next(error)
+  })
+  if (!Array.isArray(fi.data.response.message)) {
+    const error = new Error(fi.data.response.message)
+    error.status = 404
+    return next(error)
+  } else {
+    const fi_command = base64.decode(fi.data.response.message[0])
+    const fi_result = await axios.post(fiscalURL, fi_command)
+      .catch(() => {
+        const error = new Error('fiscal device error')
+        error.status = 500
+        return next(error)
+      })
+    if (fi_result.data.message === '') {
+      const error = new Error(fi_result.data.response.message)
+        error.status = 404
+        return next(error)
+    } else {
+      console.log('00-0-0-0')
+      console.log(fi_result.data.message)
+      console.log('00-0-0-0')
+      const params = request.gen_params('get_first_item', req, fi_result.data.message);
+      const fi_result_body = request.gen_body(params);
+      console.log(fi_result_body)
 
-  const first_item_options = request.gen_options(JSON.stringify(req.body))
-  const first_item = await rp(first_item_options)
-    .then(res => JSON.parse(res))
-    .catch(err => res.status(500).send(err))
-  const first_item_fiscal_command = base64.decode(first_item.response.message[0])
-  const first_item_fiscal_options = request.gen_device_options(first_item_fiscal_command)
-  const first_item_fiscal_request = await rp(first_item_fiscal_options)
-    .then(res => JSON.parse(res))
-    .catch(err => res.status(500).send(err))
-
-  const params = request.gen_params('get_first_item', req, first_item_fiscal_request.message);
-  const parse_response_first_item_body = request.gen_body(params);
-
-  const parse_response_options = request.gen_options(JSON.stringify(parse_response_first_item_body))
-  const parse_response_request = await rp(parse_response_options)
-    .then(res => JSON.parse(res))
-    .catch(err => res.status(500).send(err))
-
-  items.push(parse_response_request.response.message)
-
+      const fi_item = await axios.post(baseURL, fi_result_body).catch(() => {
+        const error = new Error('rr')
+        error.status = 404
+        return next(error)
+      })
+      items.push(fi_item.data.response.message)
+    }
+  }
   let getNext = true
   do {
     const next_item_body = {
@@ -96,29 +120,29 @@ async function get_all_items(req, res) {
         }
       }
     }
+    const ni = await axios.post(baseURL, next_item_body).catch(() => {
+    })
+    if (!Array.isArray(ni.data.response.message)) {
 
-    const next_item_option = request.gen_options(JSON.stringify(next_item_body))
-    const next_item_response = await rp(next_item_option)
-      .then(res => JSON.parse(res))
-      .catch(err => res.status(500).send(err));
-
-    const next_item_fiscal_command = base64.decode(next_item_response.response.message[0])
-    const next_item_fiscal_options = request.gen_device_options(next_item_fiscal_command)
-    const next_item_fiscal_response = await rp(next_item_fiscal_options)
-      .then(res => JSON.parse(res))
-      .catch(err => console.log(err))
-
-    const params_next_item = request.gen_params('get_next_item', req, next_item_fiscal_response.message)
-    const parse_response_next_item_body = request.gen_body(params_next_item)
-    const parse_respone_next_item_options = request.gen_options(JSON.stringify(parse_response_next_item_body))
-    const parse_response_next_item_request = await rp(parse_respone_next_item_options)
-      .then(res => JSON.parse(res))
-      .catch(err => res.status(500).send(err));
-    console.log(parse_response_next_item_request.response);
-    if (parse_response_next_item_request.response.message === 'item_not_found') {
-      getNext = false
     } else {
-      items.push(parse_response_next_item_request.response.message)
+      const ni_command = base64.decode(ni.data.response.message[0])
+      const ni_result = await axios.post(fiscalURL, ni_command)
+        .catch(() => {
+
+        })
+      if (ni_result.data.message === '') {
+
+      } else {
+        const params_next_item = request.gen_params('get_next_item', req, ni_result.data.message)
+        const ni_item_body = request.gen_body(params_next_item)
+        const ni_item = await axios.post(baseURL, ni_item_body).catch(() => {})
+        console.log(ni_item.data.response);
+        if (ni_item.data.response.message === 'item_not_found') {
+          getNext = false
+        } else {
+          items.push(ni_item.data.response.message)
+        }
+      }
     }
   } while (getNext);
 

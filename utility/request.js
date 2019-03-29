@@ -7,12 +7,22 @@ const fiscalURL = `${process.env.FISCAL_DEVICE_URL}:${printerPort}`;
 
 
 
-function gen_options (body) {
+function gen_options (data) {
   return {
     method: 'POST',
-    url: baseURL,
-    body: body,
-    json: false
+    uri: baseURL,
+    body: data,
+    json: false,
+    // sample: false
+  }
+}
+
+function gen_axios_config (data) {
+  console.log(data)
+  return {
+    // method: 'POST',
+    uri: baseURL,
+    data: data
   }
 }
 
@@ -57,5 +67,6 @@ module.exports = {
   gen_options,
   gen_device_options,
   gen_body,
-  gen_params
+  gen_params,
+  gen_axios_config
 }

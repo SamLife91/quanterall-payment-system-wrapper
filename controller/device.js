@@ -1,39 +1,55 @@
 const rp = require('request-promise');
 const request = require('../utility/request');
 const base64 = require('../utility/base64');
+const axios = require('axios');
+
+require('dotenv').config();
+
+const port = `${process.env.API_URL_PORT}`;
+const printerPort = `${process.env.FISCAL_DEVICE_PORT}`;
+const baseURL = `${process.env.API_URL}:${port}`;
+const fiscalURL = `${process.env.FISCAL_DEVICE_URL}:${printerPort}`;
 
 
 async function all (req, res, next) {
-  const options = request.gen_options(JSON.stringify(req.body))
-  const result = await rp(options)
-    .then(res => JSON.parse(res))
-    .catch(err => res.status(500).send(err))
-  if (result.status === 'failed') {
-    const error = new Error(result.response.message)
+  const result = await axios.post(baseURL, req.body)
+  .catch(() => {
+    const error = new Error('service is down')
+    error.status = 500
+    return next(error)
+  })
+
+  if (result.data.status === 'failed') {
+    const error = new Error(result.data.response.message)
     error.status = 404
     return next(error)
   } else {
-    const devices = result.response.message
+    const devices = result.data.response.message
     res.send(devices)
   }
 }
 
-async function add_device(req, res) {
-  const options = request.gen_options(JSON.stringify(req.body));
-  const result = await rp(options)
-    .then(res => JSON.parse(res));
-  if (result.status === 'failed') {
-    const error = new Error(result.response.message)
+async function add_device(req, res, next) {
+  const result = await axios.post(baseURL, req.body)
+  .catch(() => {
+    const error = new Error('service is down')
+    error.status = 500
+    return next(error)
+  })
+  if (result.data.status === 'failed') {
+    const error = new Error(result.data.response.message)
     error.status = 404
     return next(error)
   } else {
-    const command = base64.decode(result.response.message.activate_command)
-    const fs_options = request.gen_device_options(command)
-    const fs_result = await rp(fs_options)
-      .then(res => JSON.parse(res))
-      .catch(err => res.status(500).send(err))
-    if (fs_result === '') {
-      const error = new Error("device err")
+    const command = base64.decode(result.data.response.message.activate_command)
+    const fs_result = await axios.post(fiscalURL, command).catch(() => {
+      const error = new Error('service is down')
+    error.status = 500
+    return next(error)
+    })
+    console.log(fs_result.data)
+    if (fs_result.data === '') {
+      const error = new Error("lost connection with device")
       error.status = 500
       return next(error)
     } else {
@@ -43,20 +59,16 @@ async function add_device(req, res) {
           user: req.body.auth.user
         },
         data: {
-          data: fs_result.message,
+          data: fs_result.data.message,
           device: {
-            id: result.response.message.device_id
+            id: result.data.response.message.device_id
           }
         },
         operation: 'parse_response',
         type: 'add_device'
       }
-
-      const activate_options = request.gen_options(JSON.stringify(activate_device_body))
-      const activate = await rp(activate_options)
-        .then(res => JSON.parse(res))
-        .catch(err => console.log(err))
-      res.send(activate)
+      const activate = await axios.post(baseURL, activate_device_body)
+      res.send(activate.data.response.message)
     }
   }
 }
@@ -88,9 +100,6 @@ async function status(req, res) {
     return next(error)
   } else {
     const command = base64.decode(result.response.message[0])
-    console.log('++++++')
-    console.log(command)
-    console.log('++++++')
     const fs_options = request.gen_device_options(command)
     const fs_result = await rp(fs_options)
       .then(res => JSON.parse(res))
