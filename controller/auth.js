@@ -1,15 +1,18 @@
-// const rp = require('request-promise');
-// const request = require('../utility/request');
+const request = require('../utility/request');
 const axios = require("axios")
 
+const baseURL = request.baseURL
+
 async function login (req, res, next) { 
-  const result = await axios.post('http://31.13.251.48:8808', req.body)
+  const result = await axios.post(baseURL, req.body)
   .catch(() => {
-    const error = new Error('service is down')
+    let error = new Error('service is down')
     return next(error)
   })
+  console.log(result.data.status)
   if (result.data.status === 'failed') {
-    const error = new Error(result.data.response.message)
+    console.log(result.data)
+    let error = new Error(result.data.response.message)
     error.status = 404
     return next(error)
   }
@@ -17,7 +20,7 @@ async function login (req, res, next) {
 }
 
 async function register (req, res, next) {
-  const result = await axios.post('http://31.13.251.48:8808', req.body)
+  const result = await axios.post(baseURL, req.body)
   .catch(() => {
     const error = new Error('service is down')
     return next(error)

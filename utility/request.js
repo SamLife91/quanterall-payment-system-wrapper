@@ -68,5 +68,7 @@ module.exports = {
   gen_device_options,
   gen_body,
   gen_params,
-  gen_axios_config
+  gen_axios_config,
+  baseURL,
+  fiscalURL
 }
