@@ -13,14 +13,12 @@ function gen_options (data) {
     uri: baseURL,
     body: data,
     json: false,
-    // sample: false
   }
 }
 
 function gen_axios_config (data) {
   console.log(data)
   return {
-    // method: 'POST',
     uri: baseURL,
     data: data
   }

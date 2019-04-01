@@ -26,7 +26,6 @@ async function add_item(req, res, next) {
     console.log(fs_result.data)
     if (fs_result.data.message === '') {
       const error = new Error('error device')
-      error.status = 500
       return next(error)
     } else {
       const params = request.gen_params('add_item', req, fs_result.data.message);

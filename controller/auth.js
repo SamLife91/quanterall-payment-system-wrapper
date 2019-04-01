@@ -9,9 +9,7 @@ async function login (req, res, next) {
     let error = new Error('service is down')
     return next(error)
   })
-  console.log(result.data.status)
   if (result.data.status === 'failed') {
-    console.log(result.data)
     let error = new Error(result.data.response.message)
     error.status = 404
     return next(error)
