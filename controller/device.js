@@ -68,7 +68,7 @@ async function add_device(req, res, next) {
   }
 }
 
-async function get_device(req, res) {
+async function get_device(req, res, next) {
   const result = await axios.post(baseURL, req.body)
     .catch(() => {
       const error = new Error('service is down')
@@ -111,10 +111,6 @@ async function status(req, res, next) {
     } else {
       const params = request.gen_params('device_status', req, fs_result.data.message)
       const status_body = request.gen_body(params);
-      const status_result = await rp(status_options)
-        .then(res => JSON.parse(res))
-        .catch(err => res.status(500).send(err));
-      res.status(200).send(status_result);
       const status_result = await axios.post(baseURL, status_body)
         .catch(() => {
           const error = new Error('service is down')
@@ -154,7 +150,7 @@ async function get_time(req, res, next) {
   }
 }
 
-async function set_time(req, res) {
+async function set_time(req, res, next) {
   const result = await axios.post(baseURL, req.body)
   .catch(() => {})
   if (!Array.isArray(result.data.response.message)) {
